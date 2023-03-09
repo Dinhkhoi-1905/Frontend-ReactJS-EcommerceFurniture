@@ -10,6 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import { Grow } from '@material-ui/core';
 
 import { useParams, useNavigate } from 'react-router-dom';
+import { red } from "@mui/material/colors";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -29,10 +30,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     margin: theme.spacing(1),
     padding: 20,
-    // '&:hover': {
-    //   transition: 'all .5s ease-in-out',
-    //   boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-    // },
   },
   action: {
     position: "relative",
@@ -97,7 +94,8 @@ export default function ProductCard(props) {
               Add to cart
             </Button>
             <Button
-              className={classes.button}
+              sx={{bgcolor: '#fff'}}
+              // className={classes.button}
               variant="outlined"
               color="secondary"
               onClick={handleDetailClick}
@@ -107,29 +105,6 @@ export default function ProductCard(props) {
             
           </div>
         </Grow>
-        {/* {hover && (
-          <Collapse  orientation="horizontal" in={true} timeout={2000}>
-            {console.log("On hover")}
-            <div className={classes.action}>
-            <Button
-              className={classes.button}
-              // variant="contained"
-              // color="primary"
-              onClick={handleAddToCartClick}>
-              Add to cart
-            </Button>
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="secondary"
-              onClick={handleDetailClick}
-            >
-              Details
-            </Button>
-            </div>
-          </Collapse >
-            
-        )} */}
       </div>
     </Card>
   );
