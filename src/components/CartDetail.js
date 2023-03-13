@@ -1,29 +1,19 @@
-// import { useEffect, useState } from "react";
-// const CartDetail = () => {
-//     const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cart')) || []);
-//     return (
-//         <div>
-//             {cartItem.map(item => (
-//                 <p>{item.name}</p>
-//             ))}
-//         </div>
-//     );
-// };
-// export default CartDetail;
+
 import { useState, useEffect } from "react";
 import { Button, List, ListItem, ListItemText, Typography } from "@mui/material";
 
-const CartDetail = () => {
+const CartDetail = ({cartState,handleSetCart}) => {
   const [cart, setCart] = useState([]);
-
+  // const [storedCart, setStoredCart] = useState([]);
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    // setStoredCart(JSON.parse(localStorage.getItem("cart")))
     // setCart(storedCart);
+    // handleSetCart();
+    
     setCart(() => storedCart);
-  }, [localStorage.getItem("cart")]);
-//   useEffect(() => {
-//   }, [cart]);
-
+    // console.log('detail: ' + cartState)
+  }, [cartState]);
   const removeItemFromCart = (index) => {
     const updatedCart = [...cart];
     updatedCart.splice(index, 1);
@@ -42,7 +32,7 @@ const CartDetail = () => {
         <List>
           {cart.map((item, index) => (
             <ListItem key={index}>
-              <ListItemText primary={item.name} secondary={`$${item.price}`} />
+              <ListItemText primary={item.productName} secondary={`$${item.productPrice} with quantity: ${item.quantity}`} />
               <Button variant="contained" color="error" onClick={() => removeItemFromCart(index)}>
                 Remove
               </Button>

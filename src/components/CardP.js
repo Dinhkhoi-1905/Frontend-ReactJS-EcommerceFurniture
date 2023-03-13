@@ -4,16 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import AddToCartBtn from './AddToCartBtn';
 // export default function CardP(props) {
-const CardP = props =>{
-  const { product } = props;
-  let navigate = useNavigate();
+const CardP = ({product, cartState, handleSetCart }) =>{
+  // const { product } = product;
+  // let navigate = useNavigate();
   // console.log(props.stateCart)
+  // const abc = ()=> handleSetCart;
   const handleDetailClick = () => {
-    console.log('Detail click on '+ product._id);
-    navigate(product._id)
+    console.log('Detail click on '+ product._id + cartState);
   };
   // const handleAddToCart = () => {
   //   console.log('Add to cart click on '+ product._id);
@@ -41,7 +41,7 @@ const CardP = props =>{
         {/* <Button size="small" color="primary" onClick={handleAddToCart}>
           Add to cart
         </Button> */}
-        <AddToCartBtn product={product}></AddToCartBtn>
+        <AddToCartBtn productId={product._id} productName={product.name} productPrice={product.price} cartState={cartState} handleSetCart={handleSetCart}></AddToCartBtn>
         <Button size="small" color="primary" onClick={handleDetailClick}>
           Detail
         </Button>

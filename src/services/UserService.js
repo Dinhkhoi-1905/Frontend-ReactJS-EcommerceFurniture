@@ -1,15 +1,15 @@
 import api from "../http-common";
 
-const getAll = () => {
-  return api.get("/products");
+const MyInfo = () => {
+  return api.get("/users/myProfile");
 };
 
 const get = id => {
   return api.get(`/products/${id}`);
 };
 
-const create = data => {
-  return api.post("/products", data);
+const Login = data => {
+  return api.post("/auth/login", data);
 };
 
 const update = (id, data) => {
@@ -28,14 +28,14 @@ const findByTitle = title => {
   return api.get(`/products?title=${title}`);
 };
 
-const ProductService = {
-  getAll,
+const UserService = {
+  MyInfo,
   get,
-  create,
+  Login,
   update,
   remove,
   removeAll,
   findByTitle
 };
 
-export default ProductService;
+export default UserService;

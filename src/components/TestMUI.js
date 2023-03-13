@@ -19,10 +19,15 @@ import { Link } from '@mui/material';
 import TestComponent2 from './TestComponent2';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 // import ProductsList from './ProductsList';
+
+import LogOut from './LogOut';
 import SalePage from './SalePage';
 // import Product from './Product';
 import ProductDetail from './ProductDetail';
-const pages = ['Products', 'Pricing', 'Blog'];
+import Login from './Login';
+import Footer from './Footer';
+import MyProfile from './MyProfile';
+// const pages = ['Products', 'Pricing', 'Blog', 'Login'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const theme = createTheme({
   palette: {
@@ -65,7 +70,8 @@ const theme = createTheme({
 function TestMUI() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const [isLogin, setIsLogin] = React.useState(false);
+  React.useEffect(() => {getLoginState()},[]);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -80,6 +86,14 @@ function TestMUI() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const getLoginState = () => {
+    const a = localStorage.getItem('token');
+    // console.log(a);
+    if(a===null || a===undefined|| a===''||a==='null') {
+      setIsLogin(false);
+    }
+    else setIsLogin(true);
   };
   // sx={{bgcolor: 'green'}}
   return (
@@ -137,12 +151,12 @@ function TestMUI() {
                     display: { xs: 'flex', md: 'none' },
                   }}
                 >
-                  {/* Responesive menu */}
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu} href={'/haga'}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))}
+                  {/* ----------------------------Responesive menu----------------------- */}
+                  {/* {pages.map((page) => (
+                      <MenuItem key={page} onClick={handleCloseNavMenu} href={'/haga'}>
+                        <Typography textAlign="center">{page}</Typography>
+                      </MenuItem>
+                    ))} */}
 
 
                 </Menu>
@@ -166,20 +180,31 @@ function TestMUI() {
               >
                 LOGO
               </Typography>
-
+              {/* Header menu */}
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page) => (
 
-                  // <Link to={page} className="nav-link" >
-                  //   {page}
-                  // </Link>
-                  <Button key={page} sx={{ marginLeft: '10px' }}>
-                    <Link component={RouterLink} to={page}>
-                      {page}
-                    </Link>
-                  </Button>
-                  //  <Link href={page}>Link</Link>
-                ))}
+                <Button key={1} sx={{ marginLeft: '10px' }}>
+                  <Link component={RouterLink} to='Products'>
+                    Products
+                  </Link>
+                </Button>
+
+                <Button key={2} sx={{ marginLeft: '10px' }}>
+                  <Link component={RouterLink} to='/'>
+                    Pricing
+                  </Link>
+                </Button>
+                <Button key={3} sx={{ marginLeft: '10px' }} >
+                  <Link component={RouterLink} to='/Auth/Login'>
+                    Login
+                  </Link>
+                </Button>
+
+                <Button key={4} sx={{ marginLeft: '10px' }} >
+                  <Link component={RouterLink} to='/Auth/MyProfile'>
+                    MyProfile
+                  </Link>
+                </Button>
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
@@ -204,29 +229,46 @@ function TestMUI() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
+                  {/* {settings.map((setting) => (
                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
-                  ))}
+                  ))} */}
+
+                  <MenuItem key={1} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">My Profile</Typography>
+                  </MenuItem>
+                  <MenuItem key={2} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
+                  <LogOut setIsLogin={setIsLogin}></LogOut>
                 </Menu>
               </Box>
             </Toolbar>
           </Container>
 
         </AppBar>
+        <h4>Is logged in: {isLogin.toString()}</h4>
         <Container>
           <Routes>
             <Route key={1} path="/Products" element={<SalePage />} />
             <Route key={2} path="/Pricing" element={<TestComponent2 />} />
 
             <Route key={3} path="/Products/:id" element={<ProductDetail />} />
+            <Route key={4} path="/Auth/Login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
+
+            <Route key={5} path="/Auth/MyProfile" element={<MyProfile />} />
+            <Route key={6} path="/Auth/Logout" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />}/>
           </Routes>
           <h1>End content</h1>
         </Container>
 
       </Container>
+
+
+      {/* <Footer/> */}
     </ThemeProvider>
+
   );
 }
 export default TestMUI;
